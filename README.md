@@ -1,0 +1,2 @@
+# getspekt
+spec pc showing
