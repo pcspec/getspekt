@@ -1,0 +1,19 @@
+<h1>Specs#show</h1>
+<% if @spec %>
+  <div>
+  <%= @spec.name %>
+  </div>
+  <div>
+  <ul>
+  <% @pieces.each do |piece| %>
+    <li>
+      <h2><%= piece.type_system %></h2>
+      <a href="<%= piece.url %>"><%= piece.name %></a>
+      <br/>
+      <%= piece.price %><br/>
+      <img src="<%= piece.picture %>"></img><br/>
+    </li>
+  <% end %>
+  </ul>
+  </div>
+<% end %>
