@@ -1,4 +1,6 @@
 @import "bourbon";
+@import "font-awesome/scss/font-awesome.scss";
+
 html, body {
   height: 100%;
   padding: 0;
@@ -94,3 +96,21 @@ body {
   border: 4px solid #1e1e1e;
   box-shadow: inset 0 0 0 3px  darken(lightblue, 25);
 }
+.container-spec {
+  background: #eee;
+  float:left;
+  width: 90%;
+  height: 100%;
+  color: black;
+}
+#svg-spec {
+   height: 100%;
+}
+
+.menu-aside {
+  float:left;
+  width: 10%;
+  height: 100%;
+  color: white;
+}
+

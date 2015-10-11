@@ -87,7 +87,7 @@ gulp.task("serve", ["sass", "bundle"], function() {
     });
     gulp.watch("assets/scss/**/*.scss", ["sass"]);
     gulp.watch("assets/es/**/*.es", ["bundle"]);
-    gulp.watch("index.html").on("change", browserSync.reload);
+    gulp.watch("*.html").on("change", browserSync.reload);
 });
 
 gulp.task("default", ["serve"]);
