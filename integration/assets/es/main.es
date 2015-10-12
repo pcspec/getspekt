@@ -18,7 +18,7 @@ function renderText(coords, text) {
   s.text(x, y, text)
 }
 
-let s = Raphael("svg-spec", 800, 600);
+let s = Raphael("svg-spec", 1200, 800);
 
 let coords = new Coords();
 coords.tower = {x: 350, y: 150, w: 300, h: 350};
@@ -53,17 +53,57 @@ s.path(mobo.anchor);
 // ram
 let ram = {};
 ram = piece({x: 480, y: 200, w: 20, h: 150}, ram);
-ram = icon({x: 50, y:450, w: 50, h:50}, ram);
+ram = icon({x: 700, y:450, w: 50, h:50}, ram);
 ram = label(ram);
 ram = image(ram);
-ram = anchor(ram, coords.tower);
+ram = anchor(ram, coords.tower, true);
 renderRect(ram.tower);
 renderText(ram.name, "RAM");
 renderRect(ram.image);
 renderRect(ram.icon);
 s.path(ram.anchor);
 
+// cgu
+let cgu = {};
+cgu = piece({x: 370, y: 350, w: 100, h: 10}, cgu);
+cgu = icon({x: 50, y:450, w: 50, h:50}, cgu);
+cgu = label(cgu);
+cgu = image(cgu);
+cgu = anchor(cgu, coords.tower);
+renderRect(cgu.tower);
+renderText(cgu.name, "CGU");
+renderRect(cgu.image);
+renderRect(cgu.icon);
+s.path(cgu.anchor);
+
+// alim
+let alim = {};
+alim = piece({x: 350, y: 450, w: 100, h: 50}, alim);
+alim = icon({x: 450, y:550, w: 50, h:50}, alim);
+alim = label(alim);
+alim = image(alim);
+alim = anchor(alim, coords.tower, true);
+renderRect(alim.tower);
+renderText(alim.name, "ALIM");
+renderRect(alim.image);
+renderRect(alim.icon);
+s.path(alim.anchor);
+
+//storage
+let storage = {};
+storage = piece({x: 550, y: 150, w: 100, h: 150}, storage);
+storage = icon({x: 700, y:250, w: 50, h:50}, storage);
+storage = label(storage);
+storage = image(storage);
+storage = anchor(storage, coords.tower, true);
+renderRect(storage.tower);
+renderText(storage.name, "STORAGE");
+renderRect(storage.image);
+renderRect(storage.icon);
+s.path(storage.anchor);
+
 console.log(coords);
 console.log(cpu);
 console.log(mobo);
 console.log(ram);
+console.log(alim);

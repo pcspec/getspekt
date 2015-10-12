@@ -104,7 +104,7 @@ body {
   color: black;
 }
 #svg-spec {
-   height: 100%;
+  height: 100%;
 }
 
 .menu-aside {
@@ -112,5 +112,14 @@ body {
   width: 10%;
   height: 100%;
   color: white;
+  li {
+    padding: 2em 0;
+    text-align: center;
+    list-style-type: none;
+    border-bottom: 1px solid #999;
+    i{
+      font-size: 3em;
+    }
+  }
 }
 

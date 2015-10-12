@@ -2117,3 +2117,10 @@ body {
   width: 10%;
   height: 100%;
   color: white; }
+  .menu-aside li {
+    padding: 2em 0;
+    text-align: center;
+    list-style-type: none;
+    border-bottom: 1px solid #999; }
+    .menu-aside li i {
+      font-size: 3em; }

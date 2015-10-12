@@ -34,7 +34,7 @@ function renderText(coords, text) {
   s.text(x, y, text);
 }
 
-var s = Raphael("svg-spec", 800, 600);
+var s = Raphael("svg-spec", 1200, 800);
 
 var coords = new _towerCoordsEs.Coords();
 coords.tower = { x: 350, y: 150, w: 300, h: 350 };
@@ -69,20 +69,60 @@ s.path(mobo.anchor);
 // ram
 var ram = {};
 ram = (0, _piecePieceEs.piece)({ x: 480, y: 200, w: 20, h: 150 }, ram);
-ram = (0, _pieceIconEs.icon)({ x: 50, y: 450, w: 50, h: 50 }, ram);
+ram = (0, _pieceIconEs.icon)({ x: 700, y: 450, w: 50, h: 50 }, ram);
 ram = (0, _pieceLabelEs.label)(ram);
 ram = (0, _pieceImageEs.image)(ram);
-ram = (0, _pieceAnchorEs.anchor)(ram, coords.tower);
+ram = (0, _pieceAnchorEs.anchor)(ram, coords.tower, true);
 renderRect(ram.tower);
 renderText(ram.name, "RAM");
 renderRect(ram.image);
 renderRect(ram.icon);
 s.path(ram.anchor);
 
+// cgu
+var cgu = {};
+cgu = (0, _piecePieceEs.piece)({ x: 370, y: 350, w: 100, h: 10 }, cgu);
+cgu = (0, _pieceIconEs.icon)({ x: 50, y: 450, w: 50, h: 50 }, cgu);
+cgu = (0, _pieceLabelEs.label)(cgu);
+cgu = (0, _pieceImageEs.image)(cgu);
+cgu = (0, _pieceAnchorEs.anchor)(cgu, coords.tower);
+renderRect(cgu.tower);
+renderText(cgu.name, "CGU");
+renderRect(cgu.image);
+renderRect(cgu.icon);
+s.path(cgu.anchor);
+
+// alim
+var alim = {};
+alim = (0, _piecePieceEs.piece)({ x: 350, y: 450, w: 100, h: 50 }, alim);
+alim = (0, _pieceIconEs.icon)({ x: 450, y: 550, w: 50, h: 50 }, alim);
+alim = (0, _pieceLabelEs.label)(alim);
+alim = (0, _pieceImageEs.image)(alim);
+alim = (0, _pieceAnchorEs.anchor)(alim, coords.tower, true);
+renderRect(alim.tower);
+renderText(alim.name, "ALIM");
+renderRect(alim.image);
+renderRect(alim.icon);
+s.path(alim.anchor);
+
+//storage
+var storage = {};
+storage = (0, _piecePieceEs.piece)({ x: 550, y: 150, w: 100, h: 150 }, storage);
+storage = (0, _pieceIconEs.icon)({ x: 700, y: 250, w: 50, h: 50 }, storage);
+storage = (0, _pieceLabelEs.label)(storage);
+storage = (0, _pieceImageEs.image)(storage);
+storage = (0, _pieceAnchorEs.anchor)(storage, coords.tower, true);
+renderRect(storage.tower);
+renderText(storage.name, "STORAGE");
+renderRect(storage.image);
+renderRect(storage.icon);
+s.path(storage.anchor);
+
 console.log(coords);
 console.log(cpu);
 console.log(mobo);
 console.log(ram);
+console.log(alim);
 
 },{"./piece/anchor.es":2,"./piece/icon.es":3,"./piece/image.es":4,"./piece/label.es":5,"./piece/piece.es":6,"./tower/coords.es":7,"raphael":9}],2:[function(require,module,exports){
 "use strict";
@@ -93,21 +133,34 @@ Object.defineProperty(exports, "__esModule", {
 exports.anchor = anchor;
 
 function anchor(piece, tower) {
+  var isRight = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
   if (false === "image" in piece && false === "tower" in piece) {
     return false;
   }
-  var coords = {
-    from: {
+  var coords = {};
+  if (false === isRight) {
+    coords.from = {
       x: piece.image.x + piece.image.w,
       y: piece.image.y + piece.image.h
-    },
-    to: {
-      x: piece.tower.x + piece.tower.w / 2,
-      y: piece.tower.y + piece.tower.h / 2
-    }
+    };
+  } else {
+    console.log("in false");
+    coords.from = {
+      x: piece.image.x,
+      y: piece.image.y
+    };
+    console.log(coords.from);
+  }
+  coords.to = {
+    x: piece.tower.x + piece.tower.w / 2,
+    y: piece.tower.y + piece.tower.h / 2
   };
-  piece.anchor = ("\n      M" + coords.from.x + " " + coords.from.y + "L" + coords.to.x + " " + coords.to.y + "\n    ").trim();
-  return piece;
+  if ("to" in coords && "from" in coords) {
+    piece.anchor = ("\n    M" + coords.from.x + " " + coords.from.y + "L" + coords.to.x + " " + coords.to.y + "\n    ").trim();
+    return piece;
+  }
+  return false;
 }
 
 },{}],3:[function(require,module,exports){
@@ -360,7 +413,7 @@ function renderText(coords, text) {
   s.text(x, y, text);
 }
 
-var s = Raphael("svg-spec", 800, 600);
+var s = Raphael("svg-spec", 1200, 800);
 
 var coords = new _towerCoordsEs.Coords();
 coords.tower = { x: 350, y: 150, w: 300, h: 350 };
@@ -395,20 +448,60 @@ s.path(mobo.anchor);
 // ram
 var ram = {};
 ram = (0, _piecePieceEs.piece)({ x: 480, y: 200, w: 20, h: 150 }, ram);
-ram = (0, _pieceIconEs.icon)({ x: 50, y: 450, w: 50, h: 50 }, ram);
+ram = (0, _pieceIconEs.icon)({ x: 700, y: 450, w: 50, h: 50 }, ram);
 ram = (0, _pieceLabelEs.label)(ram);
 ram = (0, _pieceImageEs.image)(ram);
-ram = (0, _pieceAnchorEs.anchor)(ram, coords.tower);
+ram = (0, _pieceAnchorEs.anchor)(ram, coords.tower, true);
 renderRect(ram.tower);
 renderText(ram.name, "RAM");
 renderRect(ram.image);
 renderRect(ram.icon);
 s.path(ram.anchor);
 
+// cgu
+var cgu = {};
+cgu = (0, _piecePieceEs.piece)({ x: 370, y: 350, w: 100, h: 10 }, cgu);
+cgu = (0, _pieceIconEs.icon)({ x: 50, y: 450, w: 50, h: 50 }, cgu);
+cgu = (0, _pieceLabelEs.label)(cgu);
+cgu = (0, _pieceImageEs.image)(cgu);
+cgu = (0, _pieceAnchorEs.anchor)(cgu, coords.tower);
+renderRect(cgu.tower);
+renderText(cgu.name, "CGU");
+renderRect(cgu.image);
+renderRect(cgu.icon);
+s.path(cgu.anchor);
+
+// alim
+var alim = {};
+alim = (0, _piecePieceEs.piece)({ x: 350, y: 450, w: 100, h: 50 }, alim);
+alim = (0, _pieceIconEs.icon)({ x: 450, y: 550, w: 50, h: 50 }, alim);
+alim = (0, _pieceLabelEs.label)(alim);
+alim = (0, _pieceImageEs.image)(alim);
+alim = (0, _pieceAnchorEs.anchor)(alim, coords.tower, true);
+renderRect(alim.tower);
+renderText(alim.name, "ALIM");
+renderRect(alim.image);
+renderRect(alim.icon);
+s.path(alim.anchor);
+
+//storage
+var storage = {};
+storage = (0, _piecePieceEs.piece)({ x: 550, y: 150, w: 100, h: 150 }, storage);
+storage = (0, _pieceIconEs.icon)({ x: 700, y: 250, w: 50, h: 50 }, storage);
+storage = (0, _pieceLabelEs.label)(storage);
+storage = (0, _pieceImageEs.image)(storage);
+storage = (0, _pieceAnchorEs.anchor)(storage, coords.tower, true);
+renderRect(storage.tower);
+renderText(storage.name, "STORAGE");
+renderRect(storage.image);
+renderRect(storage.icon);
+s.path(storage.anchor);
+
 console.log(coords);
 console.log(cpu);
 console.log(mobo);
 console.log(ram);
+console.log(alim);
 
 },{"./piece/anchor.es":2,"./piece/icon.es":3,"./piece/image.es":4,"./piece/label.es":5,"./piece/piece.es":6,"./tower/coords.es":7,"raphael":9}],2:[function(require,module,exports){
 "use strict";
@@ -419,21 +512,34 @@ Object.defineProperty(exports, "__esModule", {
 exports.anchor = anchor;
 
 function anchor(piece, tower) {
+  var isRight = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
+
   if (false === "image" in piece && false === "tower" in piece) {
     return false;
   }
-  var coords = {
-    from: {
+  var coords = {};
+  if (false === isRight) {
+    coords.from = {
       x: piece.image.x + piece.image.w,
       y: piece.image.y + piece.image.h
-    },
-    to: {
-      x: piece.tower.x + piece.tower.w / 2,
-      y: piece.tower.y + piece.tower.h / 2
-    }
+    };
+  } else {
+    console.log("in false");
+    coords.from = {
+      x: piece.image.x,
+      y: piece.image.y
+    };
+    console.log(coords.from);
+  }
+  coords.to = {
+    x: piece.tower.x + piece.tower.w / 2,
+    y: piece.tower.y + piece.tower.h / 2
   };
-  piece.anchor = ("\n      M" + coords.from.x + " " + coords.from.y + "L" + coords.to.x + " " + coords.to.y + "\n    ").trim();
-  return piece;
+  if ("to" in coords && "from" in coords) {
+    piece.anchor = ("\n    M" + coords.from.x + " " + coords.from.y + "L" + coords.to.x + " " + coords.to.y + "\n    ").trim();
+    return piece;
+  }
+  return false;
 }
 
 },{}],3:[function(require,module,exports){
