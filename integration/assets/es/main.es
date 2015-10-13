@@ -1,25 +1,39 @@
 "use strict";
+
+import {PieceEntity} from "./entity/PieceEntity.es";
+import {TowerEntity} from "./entity/TowerEntity.es";
+import {SpecFactory} from "./factory/SpecFactory.es";
+
 const Raphael = require("raphael");
-
-import {Coords} from "./tower/coords.es";
-import {piece} from "./piece/piece.es";
-import {anchor} from "./piece/anchor.es";
-import {icon} from "./piece/icon.es";
-import {image} from "./piece/image.es";
-import {label} from "./piece/label.es";
-
+let s = Raphael("svg-spec", 1200, 800);
 
 function renderRect(coords) {
   var {x, y, w, h} = coords;
   s.rect(x, y, w, h);
 }
+
 function renderText(coords, text) {
   var {x, y, ...size} = coords;
   s.text(x, y, text)
 }
 
-let s = Raphael("svg-spec", 1200, 800);
+let
+  tower,
+  system,
+  cpu
+;
 
+system = new SpecFactory();
+system.name = "system";
+tower = new TowerEntity("system");
+tower.global = {x: 350, y: 150, w: 300, h: 350};
+system.addPiece(tower);
+
+cpu = new PieceEntity("cpu");
+cpu.tower = {x: 400, y: 200, w: 50, h: 50};
+cpu.model = {x: 50, y: 50, w:50, h: 50};
+system.addPiece(cpu);
+//old
 let coords = new Coords();
 coords.tower = {x: 350, y: 150, w: 300, h: 350};
 renderRect(coords.tower);
@@ -27,10 +41,16 @@ renderRect(coords.tower);
 // cpu
 let cpu = {};
 cpu = piece({x: 400, y: 200, w: 50, h: 50}, cpu);
-cpu = icon({x: 50, y: 50, w:50, h: 50}, cpu);
-cpu = label(cpu);
-cpu = image(cpu);
-cpu = anchor(cpu, coords.tower);
+cpu = anchor(
+  image(
+    label(
+      icon(
+        {x: 50, y: 50, w:50, h: 50},
+        cpu
+      )
+    )
+  ), coords.tower
+);
 renderRect(cpu.tower);
 renderRect(cpu.icon);
 renderRect(cpu.image);

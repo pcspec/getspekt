@@ -17,6 +17,9 @@ var watchify = require("watchify");
 var exorcist = require("exorcist");
 var browserify = require("browserify");
 
+var mocha = require("gulp-mocha");
+var gutil = require("gulp-util");
+
 
 var eyeglass = new Eyeglass({
   // specifying root lets the script run from any directory instead of having to be in the same directory.
@@ -73,6 +76,20 @@ gulp.task("bundle", function () {
     return bundle();
 });
 
+gulp.task("unit", function() {
+  return gulp.src(["./test/**/*Spec.es"], {read: false})
+    .pipe(mocha(
+      {
+        reporter: "nyan",
+        require: require("babel/register"),
+        globals: require("chai").expect
+
+      }
+    ))
+    .on("error", gutil.log)
+  ;
+});
+
 gulp.task("sass", function () {
   return gulp.src("./assets/scss/app.scss")
     .pipe(sass(eyeglass.sassOptions()))
@@ -81,13 +98,14 @@ gulp.task("sass", function () {
 });
 
 // Static Server + watching scss/html files
-gulp.task("serve", ["sass", "bundle"], function() {
+gulp.task("serve", ["sass", "bundle", "unit"], function() {
     browserSync.init({
         server: "./"
     });
     gulp.watch("assets/scss/**/*.scss", ["sass"]);
     gulp.watch("assets/es/**/*.es", ["bundle"]);
     gulp.watch("*.html").on("change", browserSync.reload);
+    gulp.watch(["assets/es/**/*.es", "test/**/*.es"], ["unit"]);
 });
 
 gulp.task("default", ["serve"]);
